@@ -1,0 +1,62 @@
+builds:
+  - id: cgo-linux-arm64
+    binary: cgo
+    goos:
+      - linux
+    goarch:
+      - arm64
+    env:
+      - CC=aarch64-linux-gnu-gcc
+      - CXX=aarch64-linux-gnu-g++
+
+  - id: cgo-linux-amd64
+    binary: cgo
+    goos:
+      - linux
+    goarch:
+      - amd64
+    env:
+      - CC=x86_64-linux-gnu-gcc
+      - CXX=x86_64-linux-gnu-g++
+
+  - id: cgo-darwin-arm64
+    binary: cgo
+    goos:
+      - darwin
+    goarch:
+      - arm64
+    env:
+      - CC=oa64-clang
+      - CXX=oa64-clang++
+
+  - id: cgo-darwin-amd64
+    binary: cgo
+    goos:
+      - darwin
+    goarch:
+      - amd64
+    env:
+      - CC=o64-clang
+      - CXX=o64-clang++
+
+archives:
+  - format: tar.gz
+    id: homebrew
+    name_template: "cgo.{{ .Os }}.{{ .Arch }}"
+    files:
+      - none*
+
+# it is necessary to specify the name_template of the snapshot, or else the snapshot gets created with
+# two dash(-) which results in a 500 error while downloading
+snapshot:
+  name_template: "{{ incpatch .Version }}-next"
+
+checksum:
+  name_template: "checksums.txt"
+
+changelog:
+  skip: true
+
+release:
+  prerelease: auto
+
