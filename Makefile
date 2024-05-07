@@ -2,6 +2,10 @@ OUTPUT_DIR := .
 PACKAGE_NAME          := github.com/pskrbasu/cgo-cross-compilation
 GOLANG_CROSS_VERSION  ?= v1.21.5
 
+.PHONY: build
+build:
+	go build -o $(OUTPUT_DIR)/cgo .
+
 SYSROOT_DIR     ?= sysroots
 SYSROOT_ARCHIVE ?= sysroots.tar.bz2
 
@@ -12,10 +16,6 @@ sysroot-pack:
 .PHONY: sysroot-unpack
 sysroot-unpack:
 	@pv $(SYSROOT_ARCHIVE) | pbzip2 -cd | tar -xf -
-
-.PHONY: build
-build:
-	go build -o $(OUTPUT_DIR)/cgo .
 
 .PHONY: release-dry-run
 release-dry-run:
